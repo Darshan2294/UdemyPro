@@ -28,7 +28,7 @@ namespace eCommerce.API.Controllers
             //Call the UserServices to handle registration
             AuthenticationResponse? authenticationResponse = await
                 _userServices.Register(registerRequest);
-
+             
             if (authenticationResponse == null || authenticationResponse.Success == false)
             {
                 return BadRequest(authenticationResponse);
@@ -37,7 +37,6 @@ namespace eCommerce.API.Controllers
         }
 
         [HttpPost("login")]
-
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
             if (loginRequest == null)
@@ -48,7 +47,7 @@ namespace eCommerce.API.Controllers
                 _userServices.Login(loginRequest);
             if(authenticationResponse == null || authenticationResponse.Success == false)
             {
-                return BadRequest(authenticationResponse);
+                return Unauthorized(authenticationResponse);
             }
             return Ok(authenticationResponse);
         }

@@ -14,4 +14,5 @@ namespace eCommerce.Core.Entities
         public string? PersonName {  get; set; }
         public string? Gender {  get; set; }
     }
+
 }
