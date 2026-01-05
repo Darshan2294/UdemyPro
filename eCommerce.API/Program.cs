@@ -4,38 +4,37 @@ using eCommerce.API.Middlewares;
 using System.Text.Json.Serialization;
 using eCommerce.Core.Mappers;
 using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+using eCommerce.Core.ServiceContracts;
+using eCommerce.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Add Infrastructure services
+// Add Infrastructure & Core services
 builder.Services.AddInfrastructure();
 builder.Services.AddCore();
 
-//Add Controllers to the services collection
+// Add Controllers
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
     x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+// Register AutoMapper (scan assembly for profiles)
 builder.Services.AddAutoMapper(typeof(ApplicationUserMappingProfile).Assembly);
 
+// Register your services explicitly if needed
+builder.Services.AddScoped<IUserServices, UserService>();
 
-//Build the web application
 var app = builder.Build();
 
+// Middleware
 app.UseExceptionHandlingMiddleware();
-
-//Routing
 app.UseRouting();
-
-//Auth
 app.UseAuthentication();
 app.UseAuthorization();
 
-//Controller routes
+// Routes
 app.MapControllers();
-
 app.MapGet("/", () => "Hello World!");
 
 app.Run();

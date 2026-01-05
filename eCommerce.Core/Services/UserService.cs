@@ -3,15 +3,10 @@ using eCommerce.Core.DTO;
 using eCommerce.Core.Entities;
 using eCommerce.Core.RepositoryContracts;
 using eCommerce.Core.ServiceContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Core.Services
 {
-    internal class UserService : IUserServices
+    public class UserService : IUserServices
     {
         private readonly IUsersRepository _usersRepository;
         private readonly IMapper _mapper;
@@ -44,14 +39,14 @@ namespace eCommerce.Core.Services
             };
             //_mapper.Map<AuthenticationResponse>(user);
             ApplicationUser? registerUser = await
-            _usersRepository.AddUser(user);  
+            _usersRepository.AddUser(user);
 
-            if(registerUser == null)
+            if (registerUser == null)
             {
                 return null;
             }
             //return new AuthenticationResponse(registerUser.UserId, registerUser.Email, registerUser.PersonName, registerUser.Gender, "token", Success: true);
-            return _mapper.Map<AuthenticationResponse>(user) with { Success = true, Token = "token" };
+            return _mapper.Map<AuthenticationResponse>(registerUser) with { Success = true, Token = "token" };
 
         }
     }
