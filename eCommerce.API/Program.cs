@@ -22,6 +22,26 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 // Register AutoMapper (scan assembly for profiles)
 builder.Services.AddAutoMapper(typeof(ApplicationUserMappingProfile).Assembly);
 
+//FluentValidations
+
+
+//Add API explorer services
+builder.Services.AddEndpointsApiExplorer();
+
+
+//Add swagger generation services to create swagger specification
+builder.Services.AddSwaggerGen();
+
+//Add CORS Services
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
 // Register your services explicitly if needed
 builder.Services.AddScoped<IUserServices, UserService>();
 
@@ -29,7 +49,14 @@ var app = builder.Build();
 
 // Middleware
 app.UseExceptionHandlingMiddleware();
+
+//Routing
 app.UseRouting();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseCors();
+
+//Auth
 app.UseAuthentication();
 app.UseAuthorization();
 

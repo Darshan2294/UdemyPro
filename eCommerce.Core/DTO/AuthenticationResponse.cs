@@ -1,6 +1,5 @@
 ﻿
-namespace eCommerce.Core.DTO
-{
+namespace eCommerce.Core.DTO;
     public record AuthenticationResponse(
         Guid UserId,
         string? Email,
@@ -15,4 +14,4 @@ namespace eCommerce.Core.DTO
         }
 
     }
-}
+

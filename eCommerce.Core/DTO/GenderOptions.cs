@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eCommerce.Core.DTO
+namespace eCommerce.Core.DTO;
+public enum GenderOptions
 {
-    public enum GenderOptions
-    {
-        Male, Female, Other
-    }
+    Male, Female, Other
 }
+
